@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  reactnative:
+    build: .
+    container_name: reactnative_app
+    working_dir: /app
+    volumes:
+      - .:/app
+      - C:/Users/syedr/AppData/Local/Android/Sdk:/usr/local/android-sdk
+    ports:
+      - "8081:8081"
+    environment:
+      - ANDROID_HOME=/usr/local/android-sdk
+    command: npx react-native start
