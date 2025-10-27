@@ -1,97 +1,103 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Wenex React Native App
 
-# Getting Started
+This is a **React Native** project for Android, built to run either directly on your machine or inside Docker. Here’s how you can get started easily.  
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## 1. Using Your Host Machine (Simplest Way)
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+1. **Install required tools**:  
+   - [Node.js 20+](https://nodejs.org/)  
+   - [Android Studio + Emulator](https://developer.android.com/studio)  
+   - Java 17 (comes with Android Studio)  
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+2. **Install project dependencies**:
 
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+```bash
+cd wenex_app
+npm install
 ```
 
-## Step 2: Build and run your app
+3. **Start the Metro bundler** (JavaScript server):
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+npx react-native start
 ```
 
-### iOS
+4. **Build and launch the app on Android Emulator**:
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```bash
+npx react-native run-android
 ```
 
-Then, and every time you update your native dependencies, run:
+> Tip: If the app is already running on port 8081, stop it first or use another port.
 
-```sh
-bundle exec pod install
+5. **Fast Refresh**:  
+   - Make changes in `App.tsx` or other files, and the app will update automatically in the emulator.  
+   - For full reload: press **R** twice in Android emulator.
+
+---
+
+## 2. Using Docker (Optional)
+
+If you prefer isolating everything in a container:
+
+1. **Build the Docker image**:
+
+```bash
+docker compose build --no-cache
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+2. **Start the container (Metro will run inside it)**:
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+```bash
+docker compose up
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+3. **Connect your Android Emulator** (host machine) to the Metro server in the container:  
+   - Metro runs on port `8081`.  
+   - Set environment variables if needed:
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```powershell
+$env:REACT_NATIVE_PACKAGER_HOSTNAME = "localhost"
+$env:RCT_METRO_PORT = "8081"
+```
 
-## Step 3: Modify your app
+4. **Run the app on the emulator** (still on host):
 
-Now that you have successfully run the app, let's make changes!
+```bash
+npx react-native run-android
+```
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+> Note: Docker is **optional**. For day-to-day development, running directly on your machine is simpler and faster.
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+---
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+## 3. Backend API
 
-## Congratulations! :tada:
+- If your app fetches data from a backend, set your API URL to:
 
-You've successfully run and modified your React Native App. :partying_face:
+```ts
+const API_URL = "http://localhost:PORT";
+```
 
-### Now what?
+- Replace `PORT` with your backend’s port (e.g., 8000).  
+- If using Docker for the backend, use your **host machine IP** instead of `localhost` inside the app.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+---
 
-# Troubleshooting
+## 4. Tips
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+- Stop any process using port 8081 before starting Metro.
+- Use Android Emulator or a real device for testing.
+- Fast Refresh updates your app immediately when code changes.
+- Docker is useful if you want an isolated environment, but not mandatory.
 
-# Learn More
+---
 
-To learn more about React Native, take a look at the following resources:
+## 5. Congratulations 🎉
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+You are ready to **edit, test, and run** your app!  
+
+- Edit `App.tsx` to start customizing.  
+- Enjoy fast refresh while you develop.
